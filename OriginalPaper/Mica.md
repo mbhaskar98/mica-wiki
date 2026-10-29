@@ -22,6 +22,17 @@ description: Central index and Map of Content for Mica paper notes, SOSP/OSDI re
   - [[4 Mica - File Format Design#4.4 Per-Column Detail Blocks|4.4 Per-Column Detail Blocks]]: Detail block storage for fine zone maps, Bloom filters, presence bitmaps, and column dictionaries.
   - [[4 Mica - File Format Design#4.5 Page-Local Decode Self-Containment|4.5 Page-Local Decode Self-Containment]]: Self-contained page decoding using local page bytes and shared column state without cross-page dependencies.
 
+## Experiments
+
+- [[Projects/mica/experiments/E01-Test1|E01-Test1 — Data preparation]]: Original and new data locations, 19 completed configurations, three blocked cases, current scope, and batch commands.
+- [[Projects/mica/experiments/E01-Test2|E01 — Test 2: Mica metadata loading]]: Completed NYC and ClickBench checklist covering 40 test groups, four metadata/index settings, output validation, and individual/combined report commands.
+- [[Projects/mica/experiments/commands|Commands]]: Remote prerequisites, release build commands, and output paths for the preparation binaries.
+
+## Workarounds
+
+- [[Projects/mica/workarounds/Remote Dev Setup and Resync|Remote Dev Setup and Resync]]: Two-step rsync workflow to synchronize local codebase and vendored dependencies to remote nodes without .gitignore filtering bugs.
+- [[Projects/mica/workarounds/Vendored Lance Build Fix|Vendored Lance Build Fix]]: Defensive dummy-file scaffolding workaround to bypass Cargo manifest parser failures for missing unused vendored binaries.
+
 ## Research & Publication Plan (mica-plan)
 
 - [[README|Mica Plan Overview]]: Master roadmap and synthesis of the SOSP/OSDI research plan, experiment matrix, and evidence for Mica fine-grained columnar pruning.
