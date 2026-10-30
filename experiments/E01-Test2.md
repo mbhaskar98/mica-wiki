@@ -54,40 +54,29 @@ Results on `nsl-ruby2`: `/mnt/home/bmahajan/mica/exp/results/batch-20261029T0334
 - [x] Check the same outputs for all four ClickBench configurations, including all four ablation settings.
 - [x] Download the complete ClickBench result batch locally.
 
-## Generate Mica report
+## Generate Mica reports
 
-- [x] Generate the NYC-only report for all four page sizes.
-- [x] Generate the ClickBench-only report for all four page sizes.
-- [x] Generate the combined NYC + ClickBench report for all eight configurations.
-- [x] Include questions, setup, value labels, CSV tables, and both linear/log versions of cold and warm latency.
-- [x] Verify exported table counts, charts, and ZIP integrity; generate reports locally and on `nsl-ruby2`.
-
-**Report locations on remote** (relative to `~/mica`):
-
-- NYC: `exp/results/batch-20261029T033433Z-cm9bd50y/report/`.
-- ClickBench: `exp/results/batch-20261029T060341Z-95dn98gp/report/`.
-- Combined: `exp/results/combined-report/`.
-
-On `nsl-ruby2`, run:
+Run from the repository root with its Python environment activated. These commands use the updated batches, including **20,000 rows/page**.
 
 ```bash
-cd ~/mica
 source .venv/bin/activate
-python3 exp/report_mica_experiments.py exp/results/BATCH_FOLDER
+NYC_BATCH=exp/results/batch-20261029T033433Z-cm9bd50y
+CLICKBENCH_BATCH=exp/results/batch-20261029T060341Z-95dn98gp
+
+python3 exp/report_mica_experiments.py "$NYC_BATCH" --out-dir "$NYC_BATCH/nyc-mica"
+python3 exp/report_mica_experiments.py "$CLICKBENCH_BATCH" --out-dir "$CLICKBENCH_BATCH/clickbench-mica"
+python3 exp/report_mica_experiments.py "$NYC_BATCH" "$CLICKBENCH_BATCH" --out-dir exp/results/combined-mica
 ```
 
-Inside that batch, open `report/index.html` to browse or `report/report.pdf` to share. Individual charts are in `report/plots/`, CSV tables in `report/tables/`, and the complete package is `report.zip`.
+| Report | Output folder |
+|---|---|
+| NYC | `exp/results/batch-20261029T033433Z-cm9bd50y/nyc-mica/` |
+| ClickBench | `exp/results/batch-20261029T060341Z-95dn98gp/clickbench-mica/` |
+| Combined | `exp/results/combined-mica/` |
 
-For multiple result folders, list them after the script name, separated by spaces:
+Each folder contains `index.html`, `report.pdf`, `plots/`, `tables/`, and `provenance.json`; a ZIP is written beside the folder. Reports read saved results only and do not rerun benchmarks or change datasets. Cold and warm latency include both linear and log charts.
 
-```bash
-python3 exp/report_mica_experiments.py \
-  exp/results/NYC_BATCH_FOLDER \
-  exp/results/CLICKBENCH_BATCH_FOLDER \
-  --out-dir exp/results/combined-report
-```
-
-Replace the uppercase folder names with your actual batch folders. You can list more than two folders; each dataset/page-size combination must appear only once. With `--out-dir`, exports go into that folder and the ZIP is written beside it.
+For other batches, replace the variable values. Multiple batch paths can be listed before `--out-dir`; include each dataset/page-size combination only once.
 
 ## ClickBench — completed runs
 
@@ -110,3 +99,30 @@ Results on `nsl-ruby2`: `/mnt/home/bmahajan/mica/exp/results/batch-20261029T0603
 
 - [[Projects/mica/experiments/E01-Test1|E01-Test1]]: Prepared file inventory and locations.
 - [[Projects/mica/experiments/commands|Commands]]: Remote build commands and prerequisites.
+
+## Example Mica config
+
+The JSON file contains an array of entries. Each entry names one prepared input and the tests to run.
+
+```json
+[
+  {
+    "name": "nyc-mica-50",
+    "dataset": "nyc",
+    "format": "mica",
+    "data_dir": "~/data/mica-dataset/prepared/native-format-bench/nyc-fhv-guardrail/mica/v3_single_rpp_50",
+    "manifest": "~/data/mica-dataset/prepared/native-format-bench/nyc-fhv-guardrail/manifest.json",
+    "tests": [
+      "cold-read",
+      "warm-read",
+      "mica-reader-ablation",
+      "in-memory-size",
+      "disk-space"
+    ]
+  }
+]
+```
+
+`name` labels results; `dataset` selects the workload family; `format` selects the reader family; `data_dir` selects the prepared files; `manifest` selects the dataset manifest; `tests` lists the existing test groups. Repeat entries for other page sizes and datasets. Select the file with `python3 exp/run_experiments.py --config PATH_TO_CONFIG.json --execute`.
+
+**Shared runner:** Each entry’s `format` selects `"mica"` or `"parquet"`; `dataset` selects NYC or ClickBench. Use `python3 exp/run_experiments.py --config PATH_TO_CONFIG.json --execute` for your chosen Mica list. The default config now selects NYC Parquet; see [[Projects/mica/experiments/E01-Test4|E01-Test4]] for that checklist and automatic builds.

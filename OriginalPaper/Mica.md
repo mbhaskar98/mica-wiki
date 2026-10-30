@@ -24,7 +24,7 @@ description: Central index and Map of Content for Mica paper notes, SOSP/OSDI re
 
 ## Experiments
 
-- [[Projects/mica/experiments/E01-Test1|E01-Test1 — Data preparation]]: Original and new data locations, 19 completed configurations, three blocked cases, current scope, and batch commands.
+- [[Projects/mica/experiments/E01-Test1|E01-Test1 — Data preparation]]: NYC and ClickBench checklists showing prepared files, missing Mica/Parquet configurations, locations, and preparation tools.
 - [[Projects/mica/experiments/E01-Test2|E01 — Test 2: Mica metadata loading]]: Completed NYC and ClickBench checklist covering 40 test groups, four metadata/index settings, output validation, and individual/combined report commands.
 - [[Projects/mica/experiments/commands|Commands]]: Remote prerequisites, release build commands, and output paths for the preparation binaries.
 
@@ -78,3 +78,5 @@ description: Central index and Map of Content for Mica paper notes, SOSP/OSDI re
 - [[Presence Bitmaps]]: Exact membership bit vectors mapped against a dictionary to prune pages without false positives in low-cardinality columns.
 - [[Page-Local Decode Self-Containment]]: Guarantee that a page can be decoded using only its own bytes and static column-level dictionary state.
 - [[Run-Length Encoding]]: Compression technique that stores sequences of identical consecutive values as single value-count pairs.
+
+- [[Projects/mica/experiments/E01-Test4|E01 — Test 4: Parquet costs]]: Baseline configuration checklist, paper coalescing/cache controls, run/resume commands, and later profiling-overhead work.
