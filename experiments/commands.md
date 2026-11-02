@@ -6,6 +6,8 @@ description: Remote prerequisites, release build commands, and output paths for 
 
 # Commands
 
+Parent Hub: [[Projects/mica/experiments/Experiments|Mica Experiments Hub]]
+
 ## Build the preparation binaries on remote
 
 Run on **`nsl-ruby2`**, from the repository root containing `mica/`, `eval/`, and `deps/`. Rust **1.94.0** must be installed; the remote already has the compiler tools, CMake, `pkg-config`, and `protoc`. Keep the complete checkout, including `deps/lance`; Cargo needs network access or cached dependencies.

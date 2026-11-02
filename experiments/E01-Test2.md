@@ -6,6 +6,8 @@ description: Completed NYC and ClickBench Mica runs at four page sizes, validate
 
 # E01-Test2 — Mica metadata loading
 
+Parent Hub: [[Projects/mica/experiments/Experiments|Mica Experiments Hub]]
+
 **Question:** How do page size and eager/lazy metadata and full/sparse secondary-index loading affect query time and work?
 
 **Status: Complete for the agreed Mica scope.** Both datasets × four page sizes × five test groups = **40/40 completed test groups**, including all four reader-ablation settings. This records execution, output checks, and reporting; it does not certify exact agreement with every paper value.

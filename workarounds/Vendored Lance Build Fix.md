@@ -65,5 +65,6 @@ The dummy file is a defensive engineering pattern: it satisfies the compiler too
 
 ## Vault Navigation & MoC Context
 
-- [[Projects/mica/OriginalPaper/Mica|Mica]]: Parent project hub.
+- [[Workarounds]]: Parent Mica workarounds hub.
+- [[Mica]]: Mica project hub.
 - [[Remote Dev Setup and Resync]]: Two-step rsync procedure ensuring vendored source directories transfer cleanly.

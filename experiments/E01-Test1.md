@@ -6,6 +6,8 @@ description: Dataset preparation checklists for NYC and ClickBench, with complet
 
 # E01-Test1 — Data preparation
 
+Parent Hub: [[Projects/mica/experiments/Experiments|Mica Experiments Hub]]
+
 **Goal:** Prepare the same source rows in each format/configuration. Checked = files prepared; unchecked = files still to create. **\*** marks newly created files; unmarked completed entries were already present. Query benchmarks are tracked in E01-Test2/E01-Test4.
 
 ## Locations

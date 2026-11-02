@@ -6,6 +6,8 @@ description: Completed NYC and ClickBench Parquet baselines across 18 configurat
 
 # E01-Test4 — Parquet baseline and drill-down
 
+Parent Hub: [[Projects/mica/experiments/Experiments|Mica Experiments Hub]]
+
 **Question:** Where does Parquet spend time, and how much overhead do extra measurements add?
 
 **Data:** NYC January and full ClickBench, using uncompressed Parquet. Checked boxes mean complete; unchecked boxes mean pending.
@@ -19,6 +21,11 @@ description: Completed NYC and ClickBench Parquet baselines across 18 configurat
 | **16K, 256K, 1M** | **200, 2000, 20000** |
 
 These nine uncompressed combinations are already prepared for both datasets. A page-row target is an upper limit; actual pages may contain fewer rows and always stay within a row group.
+
+* **Paper Baselines (§7):** From this sweep, the paper establishes two primary anchor configurations:
+  * **Parquet Best-Tuned:** RG = 1M, DP = 20,000 (lowest latency baseline).
+  * **Parquet Mica-Aligned:** RG = 1K, DP = 200 (direct granularity parity with Mica, showing the [[Granularity Wall]]).
+  * Full experimental testbed specifications and reader configurations are documented in [[7 Evaluation]].
 
 ## Setup
 

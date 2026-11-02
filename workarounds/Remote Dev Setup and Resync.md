@@ -40,6 +40,7 @@ rsync -avn --delete --exclude='.git/' mica/deps/ remote:~/mica/deps/
 
 ## Vault Navigation & MoC Context
 
-- [[Projects/mica/OriginalPaper/Mica|Mica]]: Parent project hub.
+- [[Workarounds]]: Parent Mica workarounds hub.
+- [[Mica]]: Mica project hub.
 - [[Vendored Lance Build Fix]]: Companion workaround for scaffolding dummy binaries in vendored dependencies.
 - [[runbooks/Runbooks|Runbooks]]: Central index of operational guides and procedures.
