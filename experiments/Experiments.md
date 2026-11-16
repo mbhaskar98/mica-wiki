@@ -13,7 +13,11 @@ aliases:
 - [[E01-Test1]]: Dataset preparation checklists for NYC and ClickBench, tracking completed configurations, data locations, and build binaries.
 - [[E01-Test2]]: Completed NYC and ClickBench Mica runs across four page sizes, covering metadata loading ablations and report verification commands.
 - [[E01-Test4]]: Completed NYC and ClickBench Parquet baselines across 18 configurations, result locations, and drill-down analysis.
+- [[E01-Test4-Parquet-Counters]]: Inventory of saved lazy-Parquet measurements and what remains combined within each step.
+- [[E02-P2]]: Pending audit of Parquet column page boundaries and query candidate-row mapping using one diagnostic test.
 - [[commands]]: Remote prerequisites, release build commands, and execution binaries for benchmark data preparation.
+
+- [[Projects/mica/experiments/clustering-hypothesis|Clustering hypothesis]]: Global layout selection report connecting pruning sensitivity, metadata scale, I/O payload, and the defined NYC workload crossover.
 
 - [[Mica]]: Parent Mica project hub.
 - [[7 Evaluation]]: Empirical evaluation methodology, hardware testbed specifications, dataset query matrix, and baseline configurations.

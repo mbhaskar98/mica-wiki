@@ -45,8 +45,10 @@ Results on `nsl-ruby2`: `/mnt/home/bmahajan/mica/exp/results/batch-20261029T0334
 
 - [x] Lazy metadata + sparse indexes — `current_default`.
 - [x] Eager metadata + sparse indexes — `metadata_eager`.
-- [x] Eager metadata + full indexes, original static/generic execution — `eager_full_materialize_generic`.
-- [x] Eager metadata + full indexes, execution settings matched to eager+sparse — `metadata_eager_full_index`.
+- [x] **Eager + full — fixed reading** — `eager_full_materialize_generic`. Loads metadata/indexes upfront, then uses a fixed read policy (`static`) and generic execution (`force-generic`). Previously labeled **“Eager + full — original generic”** in reports.
+- [x] **Eager + full — adaptive reading** — `metadata_eager_full_index`. Loads metadata/indexes upfront, then adapts read planning (`adaptive-v1`) and automatically selects execution (`auto`). Previously labeled **“Eager + full — matched execution”** in reports.
+
+Both full-index settings use eager metadata and full secondary-index loading. Their difference is data reading/execution. The adaptive-reading setting keeps execution settings the same as **Lazy + sparse**, so comparing those two better isolates metadata/index-loading costs. The fixed-reading setting changes both loading and execution behavior.
 
 ## Validation and reporting
 
@@ -65,9 +67,9 @@ source .venv/bin/activate
 NYC_BATCH=exp/results/batch-20261029T033433Z-cm9bd50y
 CLICKBENCH_BATCH=exp/results/batch-20261029T060341Z-95dn98gp
 
-python3 exp/report_mica_experiments.py "$NYC_BATCH" --out-dir "$NYC_BATCH/nyc-mica"
-python3 exp/report_mica_experiments.py "$CLICKBENCH_BATCH" --out-dir "$CLICKBENCH_BATCH/clickbench-mica"
-python3 exp/report_mica_experiments.py "$NYC_BATCH" "$CLICKBENCH_BATCH" --out-dir exp/results/combined-mica
+python3 exp/reporting/report_mica_experiments.py "$NYC_BATCH" --out-dir "$NYC_BATCH/nyc-mica"
+python3 exp/reporting/report_mica_experiments.py "$CLICKBENCH_BATCH" --out-dir "$CLICKBENCH_BATCH/clickbench-mica"
+python3 exp/reporting/report_mica_experiments.py "$NYC_BATCH" "$CLICKBENCH_BATCH" --out-dir exp/results/combined-mica
 ```
 
 | Report | Output folder |

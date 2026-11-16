@@ -1,7 +1,7 @@
 ---
 tags: []
 created: 2026-10-29
-description: Completed NYC and ClickBench Parquet baselines across 18 configurations, result locations, report commands, and pending fine instrumentation.
+description: Completed NYC and ClickBench Parquet baselines across 18 configurations, cache states, measurement modes, and pending fine instrumentation.
 ---
 
 # E01-Test4 — Parquet baseline and drill-down
@@ -48,6 +48,22 @@ Use the existing query lists: **nine NYC queries** and **five ClickBench queries
 | `parquet-metadata-cached` | Retained metadata/Bloom filters with cold data reads | Figure 15 |
 
 The paper’s focused point, time-1h, and compound queries are included in the nine-query controls. Controls are extended to every available configuration. The cache-byte counter follows the paper’s serialized-metadata read accounting; it is **not measured peak RAM or parsed-object heap usage**. Existing coarse profiling is distinct from the later fine-instrumentation overhead experiment.
+
+### Cache States and Measurement Modes
+
+- **Cold-read:**
+  - Remove file bytes from the OS cache before each query.
+  - Parquet reads the file and rebuilds metadata. Records total latency.
+- **Warm-read:**
+  - Run once to put needed file bytes in the OS cache.
+  - Later queries read those bytes from RAM, but still rebuild metadata.
+- **Metadata-cold:**
+  - Same intended cache state as cold-read: file bytes are cold and metadata is rebuilt.
+  - Uses the separate measurement program that also records time spent in individual steps.
+- **Metadata-cached:**
+  - Keep already-parsed metadata and Bloom filters ready in memory.
+  - Remove file bytes from the OS cache before each query, so data reads remain cold.
+  - Uses the same detailed measurement program; initial metadata preparation is outside query timing.
 
 ## NYC
 
@@ -146,9 +162,9 @@ source .venv/bin/activate
 NYC_BATCH=exp/results/batch-20261029T091931Z-43t02s4b
 CLICKBENCH_BATCH=exp/results/batch-20261029T143404Z-oz1huksy
 
-python3 exp/report_parquet_experiments.py "$NYC_BATCH" --out-dir "$NYC_BATCH/nyc-parquet"
-python3 exp/report_parquet_experiments.py "$CLICKBENCH_BATCH" --out-dir "$CLICKBENCH_BATCH/clickbench-parquet"
-python3 exp/report_parquet_experiments.py "$NYC_BATCH" "$CLICKBENCH_BATCH" --out-dir exp/results/combined-parquet
+python3 exp/reporting/report_parquet_experiments.py "$NYC_BATCH" --out-dir "$NYC_BATCH/nyc-parquet"
+python3 exp/reporting/report_parquet_experiments.py "$CLICKBENCH_BATCH" --out-dir "$CLICKBENCH_BATCH/clickbench-parquet"
+python3 exp/reporting/report_parquet_experiments.py "$NYC_BATCH" "$CLICKBENCH_BATCH" --out-dir exp/results/combined-parquet
 ```
 
 | Report | Output folder |
@@ -163,7 +179,7 @@ For other batches, replace the variable values. Multiple batch paths can be list
 
 ## Later work
 
-- [ ] Audit missing generic Parquet costs beyond the existing counters.
+- [x] Audit missing generic Parquet costs beyond the existing counters. See [[E01-Test4-Parquet-Counters]]: Existing measurements, missing detail, public hooks, and the proposed instrumentation scope.
 - [ ] Add only necessary fine instrumentation to the shared reader path, with an on/off switch.
 - [ ] Repeat matching benchmarks and quantify instrumentation overhead.
 
